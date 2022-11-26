@@ -42,5 +42,11 @@ for lt, ln, el, name in zip(lat, lon, elev, name):
         )
     )
 
+fg.add_child(
+    folium.GeoJson(
+        data=(open("./Resources/world.json", "r", encoding="utf-8-sig").read())
+    )
+)
+
 map.add_child(fg)
 map.save("Map1.html")
