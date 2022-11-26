@@ -13,6 +13,16 @@ Volcano name:<br>
 Height: %s m
 """
 
+
+def marker_color(elevation):
+    if elevation < 1000:
+        return "green"
+    elif elevation > 3000:
+        return "red"
+    else:
+        return "orange"
+
+
 lat = list(volcanoData["LAT"])
 lon = list(volcanoData["LON"])
 elev = list(volcanoData["ELEV"])
@@ -24,7 +34,7 @@ for lt, ln, el, name in zip(lat, lon, elev, name):
         folium.Marker(
             location=[lt, ln],
             popup=folium.Popup(iframe),
-            icon=folium.Icon(color="green"),
+            icon=folium.Icon(color=marker_color(el)),
         )
     )
 
