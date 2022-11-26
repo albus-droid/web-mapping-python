@@ -31,10 +31,14 @@ name = list(volcanoData["NAME"])
 for lt, ln, el, name in zip(lat, lon, elev, name):
     iframe = folium.IFrame(html=html % (name, name, el), width=200, height=100)
     fg.add_child(
-        folium.Marker(
+        folium.CircleMarker(
             location=[lt, ln],
             popup=folium.Popup(iframe),
-            icon=folium.Icon(color=marker_color(el)),
+            radius=6,
+            fill_color=marker_color(el),
+            color="grey",
+            fill_opacity=0.7,
+            fill=True,
         )
     )
 
