@@ -3,7 +3,8 @@ import pandas
 
 map = folium.Map(location=[38.58, -99.09], zoom_start=6, tiles="Stamen Terrain")
 
-fg = folium.FeatureGroup(name="My Map")
+fgVol = folium.FeatureGroup(name="Volcano")
+fgPop = folium.FeatureGroup(name="Population")
 
 volcanoData = pandas.read_csv("./Resources/Volcanoes.txt")
 
@@ -30,7 +31,7 @@ name = list(volcanoData["NAME"])
 
 for lt, ln, el, name in zip(lat, lon, elev, name):
     iframe = folium.IFrame(html=html % (name, name, el), width=200, height=100)
-    fg.add_child(
+    fgVol.add_child(
         folium.CircleMarker(
             location=[lt, ln],
             popup=folium.Popup(iframe),
@@ -42,7 +43,7 @@ for lt, ln, el, name in zip(lat, lon, elev, name):
         )
     )
 
-fg.add_child(
+fgPop.add_child(
     folium.GeoJson(
         data=open("./Resources/world.json", "r", encoding="utf-8-sig").read(),
         style_function=lambda x: {
@@ -55,5 +56,8 @@ fg.add_child(
     )
 )
 
-map.add_child(fg)
+map.add_child(fgVol)
+map.add_child(fgPop)
+map.add_child(folium.LayerControl())
+
 map.save("Map1.html")
